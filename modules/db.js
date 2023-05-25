@@ -1,4 +1,4 @@
-const dburl = `https://dungee-1c560-default-rtdb.europe-west1.firebasedatabase.app`;
+const dburl = `https://dungee-252d3-default-rtdb.europe-west1.firebasedataba.app`;
 
 
 export function fetchUsuarios(pin){
