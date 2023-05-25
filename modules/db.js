@@ -1,12 +1,16 @@
-const dburl = `https://dungee-252d3-default-rtdb.europe-west1.firebasedataba.app`;
+const dburl = `https://dungee-252d3-default-rtdb.europe-west1.firebasedatabase.app`;
 
 
 export function fetchUsuarios(pin){
-    return fetch(`${dburl}/api/damelosusers?pin=${pin}`).then(datos => datos.json())
+    return fetch(`/api/damelosusers?pin=${pin}`).then(datos => datos.json())
 }
 
 export function fetchPreguntas(){
-    return fetch(`${dburl}/api/damelasquestions`).then(preguntitas => preguntitas.json())
+    return fetch(`/api/damelasquestions`).then(preguntitas => preguntitas.json())
+}
+
+export function getPreguntaActual(pin){
+    return fetch(`/api/damelapreguntaactual.js`).then(preguntitas => preguntitas.json())
 }
 
 export function updatePreguntaActual(i, pin){
@@ -23,7 +27,3 @@ export function addUser(pin, nom){
     });
 }
 
-export function getPreguntaActual(pin){
-    return fetch(`${dburl}/pins/pin${pin}/pregunta.json`)
-        .then(data => data.json())
-}

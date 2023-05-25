@@ -75,11 +75,10 @@
         },1000);
     }
 
-    function responder(respuesta){
-        console.log(`${preguntaActual} responde: ${respuesta}`);
-    }
+
 
     function responder(respuesta) {
+        console.log(`${preguntaActual} responde: ${respuesta}`);
       desactivarBotones();
 
       actualizarRespuesta(pin, userid, preguntaActual, respuesta);

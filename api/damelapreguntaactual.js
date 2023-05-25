@@ -5,4 +5,3 @@ export default function handler(request, response) {
     .then(data => data.json())
     .then(json => response.json(json))
 }
-
