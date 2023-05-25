@@ -62,9 +62,15 @@
         setInterval(()=>{
             getPreguntaActual(pin).then(json => {
                 if (json != null) {
+
+                    if (preguntaFirebase.valor != preguntaActual) {
+                     activarBotones();
+                  }
+
                     preguntaActual = json.value;
                     mostrar("botonesScreen", "fragment");
                 }
+                preguntaEl.innerText = getPreguntaActual;
             })
         },1000);
     }
@@ -73,6 +79,30 @@
         console.log(`${preguntaActual} responde: ${respuesta}`);
     }
 
+    function responder(respuesta) {
+      desactivarBotones();
+
+      actualizarRespuesta(pin, userid, preguntaActual, respuesta);
+    }
+
+
+    function desactivarBotones(){
+
+      ba.disabled = true;
+      bb.disabled = true;
+      bc.disabled = true;
+      bd.disabled = true;
+      ocultar("botones", "oculto")
+
+    }
+
+    function activarBotones(){
+      ba.disabled = false;
+      bb.disabled = false;
+      bc.disabled = false;
+      bd.disabled = false;
+      mostrar("apuntarseScreen", "fragment")
+    }
 </script>
 
 
