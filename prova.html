@@ -1,0 +1,155 @@
+<div id="podium">
+   
+</div>
+
+<style>
+#podium {
+    display: flex;
+    gap: 4px;
+    align-items: flex-end;
+    
+}
+
+#podium div {
+    width: 4em;
+    height: 0px;;
+    color: white;
+    background-color: blue;
+    transition: height 2s;
+}
+</style>
+
+<script>
+const preguntas =  {
+    "pregunta0" : {
+        "correcta": "a"
+    },
+    "pregunta1" : {
+        "correcta": "b"
+    },
+    "pregunta2" : {
+        "correcta": "c"
+    },
+    "pregunta3" : {
+        "correcta": "d"
+    }
+}
+
+const respuestas = {
+    "-zxcv": {
+        "name": "mbappe",
+        "total": 0,
+        "pregunta0": {
+            "value": "a"
+        },
+        "pregunta1": {
+            "value": "a"
+        },
+        "pregunta2": {
+            "value": "a"
+        },
+        "pregunta3": {
+            "value": "a"
+        }
+    },
+    "-qwer": {
+        "name": "messi",
+        "total": 0,
+        "pregunta0": {
+            "value": "b"
+        },
+        "pregunta1": {
+            "value": "b"
+        },
+        "pregunta2": {
+            "value": "c"
+        },
+        "pregunta3": {
+            "value": "a"
+        }
+    },
+    "-asdf": {
+        "name": "vinijr",
+        "total": 0,
+        "pregunta0": {
+            "value": "d"
+        },
+        "pregunta1": {
+            "value": "b"
+        },
+        "pregunta2": {
+            "value": "c"
+        },
+        "pregunta3": {
+            "value": "d"
+        }
+    },
+    
+    "-ghjk": {
+        "name": "josep",
+        "total": 0,
+        "pregunta0": {
+            "value": "a"
+        },
+        "pregunta1": {
+            "value": "b"
+        },
+        "pregunta2": {
+            "value": "c"
+        },
+        "pregunta3": {
+            "value": "d"
+        }
+    },
+    
+    "-yuio": {
+        "name": "carlos",
+        "total": 0,
+        "pregunta0": {
+            "value": "a"
+        },
+        "pregunta3": {
+            "value": "d"
+        }
+    }
+}
+
+
+// respuestas."zxcv"."name" ==== respuesta["zxcv"].name
+
+// respuestas.b.name ==== respuesta["b"].name
+
+
+for(const userid in respuestas) {
+    console.log(respuestas[userid]["name"])
+    for(const preguntaid in preguntas){
+        console.log(preguntaid)
+        if(preguntas[preguntaid]["correcta"] === respuestas[userid]?.[preguntaid]?.["value"]){
+            respuestas[userid]["total"]++        
+        }
+    }
+}
+
+let codi = ""
+for(const userid in respuestas) {
+    console.log(respuestas[userid]["name"] + '   ' +respuestas[userid]["total"])
+
+    codi += `<div id="${respuestas[userid]["name"]}">${respuestas[userid]["name"]}</div>`
+}
+podium.innerHTML = codi;
+
+setTimeout(() => {
+    for(const userid in respuestas) {
+    console.log(respuestas[userid]["name"] + '   ' +respuestas[userid]["total"])
+
+    document.getElementById(respuestas[userid]["name"]).style.height = respuestas[userid]["total"]*10 + "em";
+}
+}, 2000);
+
+
+
+
+ 
+
+
+</script>

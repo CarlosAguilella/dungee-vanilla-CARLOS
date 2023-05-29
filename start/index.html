@@ -28,6 +28,10 @@
         <div id="progress"></div>
         <div id="preguntasEl"></div>
     </div>
+
+    <div id="podiumFragment" class="fragment">
+
+    </div>
 </div>
 
 <script type="module">
@@ -109,10 +113,19 @@
             updatePreguntaActual(i, pin);
             
             if(i == cantidad){
-                clearInterval(mostrarPregsInterval)
+                updatePreguntaActual(-1, pin);
+                clearInterval(mostrarPregsInterval);
+                mostrarPodium();
             }
 
         }, 4500);  
+    }
+
+
+    function mostrarPodium(){
+        mostrar("poduimFragment", "fragment");
+
+        
     }
 </script> 
 

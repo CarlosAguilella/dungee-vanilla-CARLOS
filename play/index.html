@@ -20,29 +20,31 @@
 </div>
 
 <div id="botonesScreen" class="fragment">
+    <p id="preguntaEl"></p>
     <div class="botones">
-        <button id="aButton">rojo</button>
-        <button id="bButton">verde</button>
-        <button id="cButton">azul</button>
-        <button id="dButton">amarillo</button>
+        <button id="ba">rojo</button>
+        <button id="bb">verde</button>
+        <button id="bc">azul</button>
+        <button id="bd">amarillo</button>
     </div>    
 </div>
 
 
 <script type="module">
 
-    import { addUser, fetchPreguntas, updatePreguntaActual } from '/modules/db.js';
+    import { addUser, fetchPreguntas, updatePreguntaActual, getPreguntaActual, actualizarRespuesta } from '/modules/db.js';
     import { mostrar } from '/modules/ui.js';
 
     let pin;
     let nom;
+    let userid;
     let preguntaActual;
 
     joinButton.onclick = apuntarse;
-    aButton.onclick = () => { responder('a') };
-    bButton.onclick = () => { responder('b') };
-    cButton.onclick = () => { responder('c') };
-    dButton.onclick = () => { responder('d') };
+    ba.onclick = () => { responder('a') };
+    bb.onclick = () => { responder('b') };
+    bc.onclick = () => { responder('c') };
+    bd.onclick = () => { responder('d') };
 
     mostrar("apuntarseScreen", "fragment");
 
@@ -51,7 +53,9 @@
         pin = pinEl.value;
         nom = nomEl.value;
 
-        addUser(pin, nom);
+        addUser(pin, nom).then(user => {
+            userid = user.name;
+        });
 
         mostrar("waitingScreen", "fragment");
 
@@ -59,18 +63,22 @@
     }
 
     function obtenerPreguntaActual(){
-        setInterval(()=>{
-            getPreguntaActual(pin).then(json => {
-                if (json != null) {
+        const obtenerPreguntaInterval = setInterval(()=>{
+            getPreguntaActual(pin).then(preguntaFirebase => {
+                if (preguntaFirebase != undefined) {
 
-                    if (preguntaFirebase.valor != preguntaActual) {
-                     activarBotones();
-                  }
+                    if (preguntaFirebase.value == -1) {
+                        // mostrar(FINNNN); //FIN
+                        clearInterval(obtenerPreguntaInterval);
+                    }
+                    if (preguntaFirebase.value != preguntaActual) {
+                        activarBotones();
+                    }
 
-                    preguntaActual = json.value;
+                    preguntaActual = preguntaFirebase.value;
                     mostrar("botonesScreen", "fragment");
+                    preguntaEl.innerText = preguntaFirebase.value;
                 }
-                preguntaEl.innerText = getPreguntaActual;
             })
         },1000);
     }
@@ -79,9 +87,9 @@
 
     function responder(respuesta) {
         console.log(`${preguntaActual} responde: ${respuesta}`);
-      desactivarBotones();
+        desactivarBotones();
 
-      actualizarRespuesta(pin, userid, preguntaActual, respuesta);
+        actualizarRespuesta(pin, userid, respuesta, preguntaActual);
     }
 
 
@@ -91,7 +99,6 @@
       bb.disabled = true;
       bc.disabled = true;
       bd.disabled = true;
-      ocultar("botones", "oculto")
 
     }
 
