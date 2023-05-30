@@ -14,8 +14,18 @@
     </div>
 
     <div id="preguntasFragment" class="fragment">
-        <div id="progress"></div>
-        <div id="preguntasEl"></div>
+        <div id="progress" class="progressStart"></div>
+        <div id="preguntasEl">
+            <div id='pregunta0' class='pregunta'>
+                <h1>2+2</h1>
+                <ul>
+                    <li>4</li>
+                    <li>$6}</li>
+                    <li>${5}</li>
+                    <li>${4}</li>
+                </ul>
+            </div>
+        </div>
     </div>
 
     <div id="podiumFragment" class="fragment">
@@ -35,6 +45,7 @@
     startButton.onclick = startGame;
 
     mostrar("pinFragment", "fragment");
+    mostrar("preguntasFragment", "fragment");
 
     pin = Math.floor(Math.random()*9000)+1000;
     pinEl.innerText = pin;
@@ -256,6 +267,7 @@
         padding: 1vmin;
         list-style-type: none;
         text-align: center;
+        width: 48vw;
     }
 
     .pregunta li:nth-child(1) {
@@ -292,6 +304,7 @@
     }
     @keyframes progress { from { width: 0%} to { width: 100%}}
     @keyframes progress2 { from { width: 0%} to { width: 100%}}
+
     .oculto {
         display: none;
     }
