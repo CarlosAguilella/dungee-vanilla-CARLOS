@@ -16,7 +16,7 @@
     <div id="preguntasFragment" class="fragment">
         <div id="progress" class="progressStart"></div>
         <div id="preguntasEl">
-            <div id='pregunta0' class='pregunta'>
+            <!-- <div id='pregunta0' class='pregunta'>
                 <h1>2+2</h1>
                 <ul>
                     <li>4</li>
@@ -24,7 +24,7 @@
                     <li>${5}</li>
                     <li>${4}</li>
                 </ul>
-            </div>
+            </div> -->
         </div>
     </div>
 
@@ -45,7 +45,7 @@
     startButton.onclick = startGame;
 
     mostrar("pinFragment", "fragment");
-    mostrar("preguntasFragment", "fragment");
+    // mostrar("preguntasFragment", "fragment");
 
     pin = Math.floor(Math.random()*9000)+1000;
     pinEl.innerText = pin;
@@ -293,13 +293,13 @@
 
     #progress.progressStart {
         animation-name: progress;
-        animation-duration: 4.5s;
+        animation-duration: 1.5s;
         animation-timing-function: linear;    
     }
     
     #progress.progressReset {
         animation-name: progress2;
-        animation-duration: 4.5s;
+        animation-duration: 1.5s;
         animation-timing-function: linear;
     }
     @keyframes progress { from { width: 0%} to { width: 100%}}
