@@ -1,12 +1,7 @@
 <!DOCTYPE html>
 <meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Dungee</title>
-
-<nav>
-    <a href="start">Start a new Dungee</a>
-    <a href="play">Play an existing Dungee</a>    
-</nav>
-
 
 <div id="apuntarseScreen" class="fragment">
     <h1>PLAY</h1>
@@ -35,10 +30,7 @@
     import { addUser, fetchPreguntas, updatePreguntaActual, getPreguntaActual, actualizarRespuesta } from '/modules/db.js';
     import { mostrar } from '/modules/ui.js';
 
-    let pin;
-    let nom;
-    let userid;
-    let preguntaActual;
+    let pin, nom, userid, preguntaActual;
 
     joinButton.onclick = apuntarse;
     ba.onclick = () => { responder('a') };
@@ -46,23 +38,17 @@
     bc.onclick = () => { responder('c') };
     bd.onclick = () => { responder('d') };
 
-    mostrar("apuntarseScreen", "fragment");
-
+    // mostrar("apuntarseScreen", "fragment");
+    mostrar("botonesScreen", "fragment");
 
     function apuntarse(){
         pin = pinEl.value;
         nom = nomEl.value;
 
-        addUser(pin, nom).then(user => {
-            userid = user.name;
-        });
+        addUser(pin, nom).then(user => { userid = user.name; });
 
         mostrar("waitingScreen", "fragment");
 
-        obtenerPreguntaActual();
-    }
-
-    function obtenerPreguntaActual(){
         const obtenerPreguntaInterval = setInterval(()=>{
             getPreguntaActual(pin).then(preguntaFirebase => {
                 if (preguntaFirebase != undefined) {
@@ -72,7 +58,7 @@
                         clearInterval(obtenerPreguntaInterval);
                     }
                     if (preguntaFirebase.value != preguntaActual) {
-                        activarBotones();
+                        activarBotones(true);
                     }
 
                     preguntaActual = preguntaFirebase.value;
@@ -80,35 +66,21 @@
                     preguntaEl.innerText = preguntaFirebase.value;
                 }
             })
-        },1000);
+        },500);
     }
 
-
-
     function responder(respuesta) {
-        console.log(`${preguntaActual} responde: ${respuesta}`);
-        desactivarBotones();
-
+        activarBotones(false);
         actualizarRespuesta(pin, userid, respuesta, preguntaActual);
     }
 
-
-    function desactivarBotones(){
-
-      ba.disabled = true;
-      bb.disabled = true;
-      bc.disabled = true;
-      bd.disabled = true;
-
+    function activarBotones(siono){
+        ba.disabled = !siono;
+        bb.disabled = !siono;
+        bc.disabled = !siono;
+        bd.disabled = !siono;
     }
 
-    function activarBotones(){
-      ba.disabled = false;
-      bb.disabled = false;
-      bc.disabled = false;
-      bd.disabled = false;
-      mostrar("apuntarseScreen", "fragment")
-    }
 </script>
 
 
@@ -120,97 +92,48 @@
         margin: 0;
         padding: 0;
     }
-    :root {
-        --bg: #e3e4e8;
-        --fg: #17181c;
-        --dur: 8s;
-        font-size: calc(20px + (30 - 20) * (100vw - 320px) / (1280 - 320));
-    }
-    body {
-        background: var(--bg);
-        color: var(--fg);
-        font: bold 1em/1.5 "Comfortaa", sans-serif;
-        display: grid;
-        place-items: center;
-        align-content: center;
-        height: 100vh;
-        letter-spacing: 0.1em;
-        text-transform: uppercase;
-    }
-
-    nav {
-        display: flex;
-        gap: 2em;
-        padding: 1.4em;
-        background-color: hsl(138, 94%, 14%);
-        box-shadow: 2px 2px 12px Xrgb(3, 3, 3);
-        transition: background-color 3s;
-    }
-
-    nav span.separador {
-        width: 1px;
-        background: linear-gradient(#ffffff00, rgb(190, 190, 190), #ffffff00);
-    }
-
-    nav a {
-        color: white;
-        text-decoration: none;
-        border-radius: 8px;
-        padding: 0.8em;
-        display: flex;
-    }
-
-    nav a:hover {
-        background-color: hsl(138, 94%, 34%);
-        transition: background-color 0.6s;
-    }
-
-    section a {
-        color: white;
-        text-decoration: none;
-        border-radius: 16px;
-        padding: 0.8em;
-        display: flex;
-        background: rgb(71, 40, 207);
-    }
-
-    body{
-        margin: 0;
-        background: linear-gradient(90deg, hsl(138, 94%, 14%),hsl(133, 71%, 69%));
-
-        font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-        font-size: large;
-        height: 100%;
-        display: flex;
-        flex-direction: column;
-    }
 
     html {
         height: 100%;
     }
 
-    .buttons {
-        justify-content: center;
-        display: flex;
-        gap: 2em;;
-    }
-
-    section {
+    body{
+        margin: 0;
+        background: linear-gradient(90deg, hsl(138, 94%, 14%),hsl(133, 71%, 69%));
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+        font-size: 5vh;
+        height: 100%;
         display: flex;
         flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        gap: 5em;
-        height: 100%;
-
     }
 
-    footer {
-        width: 100%;
-        color: white;
-        padding: 1em;
-        text-align: center;
+    .fragment {
+        height: 100%;
+    }
 
+    .botones {
+        display: grid;
+        grid-template-columns: 1fr 1fr  ;
+        gap: 2vh;
+        height: 100%;
+    }
+
+    .botones button {
+        height: 48vh;
+        font-size: 5vmin  ;
+    }
+
+    #ba {
+        background-color: blue;
+    }
+    #bb {
+        background-color: red;
+    }
+    #bc {
+        background-color: green;
+    }
+    #bd {
+        background-color: yellow;
     }
 
     .oculto{

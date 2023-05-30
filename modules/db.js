@@ -2,7 +2,7 @@ const dburl = `https://dungee-252d3-default-rtdb.europe-west1.firebasedatabase.a
 
 
 export function fetchUsuarios(pin){
-    return fetch(`${dburl}/pins/pin${pin}.json`)
+    return fetch(`${dburl}/pins/pin${pin}/users.json`)
     .then(data => data.json())
     // return fetch(`/api/damelosusers?pin=${pin}`).then(datos => datos.json())
 }
@@ -16,7 +16,7 @@ export async function fetchPreguntas(){
                 "respuesta1": "5",
                 "respuesta2": "2",
                 "respuesta3": "1",
-                "correcta": 0
+                "correcta": "a"
             },
             "pregunta1" : {
                 "pregunta": "2+7?",
@@ -24,7 +24,7 @@ export async function fetchPreguntas(){
                 "respuesta1": "5",
                 "respuesta2": "9",
                 "respuesta3": "1",
-                "correcta": 2
+                "correcta": "c"
             },
             "pregunta2" : {
                 "pregunta": "2+1?",
@@ -32,7 +32,7 @@ export async function fetchPreguntas(){
                 "respuesta1": "3",
                 "respuesta2": "2",
                 "respuesta3": "1",
-                "correcta": 1
+                "correcta": "b"
             },
             "pregunta3" : {
                 "pregunta": "20+10?",
@@ -40,7 +40,7 @@ export async function fetchPreguntas(){
                 "respuesta1": "10",
                 "respuesta2": "20",
                 "respuesta3": "30",
-                "correcta": 3
+                "correcta": "d"
             }
         }
     }
@@ -69,7 +69,7 @@ export function addUser(pin, nom){
 }
 
 export function actualizarRespuesta(pin, userid, respuesta, pregunta){
-    fetch(`${dburl}/pin/pin${pin}/users/${userid}/pregunta${pregunta}.json`, {
+    fetch(`${dburl}/pins/pin${pin}/users/${userid}/pregunta${pregunta}.json`, {
         method: 'PUT',
         body: `{"value": "${respuesta}"}`
     })
